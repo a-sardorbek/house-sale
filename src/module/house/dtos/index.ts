@@ -1,0 +1,5 @@
+export * from './create.house.dto'
+export * from './update.house.dto'
+export * from './delete.house.dto'
+export * from './retrieve.house.dto'
+export * from './retrieve-by-id.house.dto'

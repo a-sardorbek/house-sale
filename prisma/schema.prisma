@@ -1,0 +1,91 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  url        = env("DATABASE_URL")
+  provider   = "postgresql"
+  extensions = [pgcrypto]
+}
+
+enum UserStatus {
+  silver
+  gold 
+  platinium
+ 
+  @@map("user_status")
+}
+
+enum UserType {
+  client
+  customer
+  guest
+
+  @@map("user_type")
+}
+
+enum HouseType {
+  rent
+  sale
+  none
+
+  @@map("house_type")
+}
+
+enum EntityStatus {
+  active
+  inactive
+
+  @@map("entity_status")
+}
+
+model User {
+  id        String       @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid @id
+  fullName  String       @map("full_name") @db.VarChar(255)
+  userName  String       @map("user_name") @db.VarChar(255)
+  phone     String?      @map("phone") @db.VarChar(15)
+  status    UserStatus   @map("status") @default(silver)
+  type      UserType     @map("type") @default(guest)
+  createdAt DateTime     @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt DateTime?    @map("deleted_at") @db.Timestamp(0)
+
+  house House[]
+
+  @@unique([userName])
+  @@map("user")
+}
+
+model House {
+  id          String       @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid  @id
+  title       String       @map("title") @db.VarChar(255)
+  description String       @map("description") @db.Text
+  address     String?      @map("address") @db.VarChar(255)
+  location    Json?        @map("location") @default("{}")
+  status      EntityStatus @map("status") @default(inactive)
+  type        HouseType   @map("type") @default(none)
+  userId      String       @map("user_id") @db.Uuid
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt   DateTime?    @map("deleted_at") @db.Timestamp(0)
+
+  resourceFile ResourceFile[]
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("house")
+}
+
+model ResourceFile {
+  id          String       @default(dbgenerated("gen_random_uuid()")) @map("id") @db.Uuid  @id
+  logo        String       @map("logo") @db.VarChar
+  houseId     String       @map("house_id") @db.Uuid
+  createdAt   DateTime     @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt   DateTime?    @map("deleted_at") @db.Timestamp(0)
+
+  house House @relation(fields: [houseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("resource_file")
+}
+
