@@ -1,4 +1,4 @@
-import { EntityStatus, HouseType, UserStatus, UserType } from "@prisma/client";
+import { UserStatus, UserType } from "@prisma/client";
 
 export declare interface UserCreateRequest {
     fullName: string;

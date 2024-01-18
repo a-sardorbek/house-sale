@@ -1,7 +1,7 @@
 import { IsEnum, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Type } from 'class-transformer'
 import { RetrieveHouseListRequest } from "../types/house.type";
-import { $Enums, EntityStatus, HouseType } from "@prisma/client";
+import { EntityStatus, HouseType } from "@prisma/client";
 
 export class RetrieveHouseListDto implements RetrieveHouseListRequest {
 

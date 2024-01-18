@@ -1,15 +1,15 @@
 import { IsEnum, IsNumber, IsOptional, IsString, MaxLength } from "class-validator";
 import { Type } from 'class-transformer'
 import { RetrieveUserListRequest } from "../types/user.type";
-import { $Enums, EntityStatus, HouseType, UserStatus, UserType } from "@prisma/client";
+import { UserStatus, UserType } from "@prisma/client";
 
 export class RetrieveUserListDto implements RetrieveUserListRequest {
 
-    @IsEnum(EntityStatus)
+    @IsEnum(UserStatus)
     @IsOptional()
     status?: UserStatus;
 
-    @IsEnum(HouseType)
+    @IsEnum(UserType)
     @IsOptional()
     type?: UserType;
 

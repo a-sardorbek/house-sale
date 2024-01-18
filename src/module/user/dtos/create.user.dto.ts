@@ -1,4 +1,4 @@
-import { EntityStatus, HouseType, UserStatus, UserType } from "@prisma/client";
+import { UserStatus, UserType } from "@prisma/client";
 import { IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from "class-validator";
 import { UserCreateRequest } from "../types/user.type";
 

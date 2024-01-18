@@ -25,7 +25,7 @@ export class UpdateUserDto implements UserUpdateRequest {
     @IsOptional()
     status?: UserStatus;
 
-    @IsEnum(HouseType)
+    @IsEnum(UserType)
     @IsOptional()
     type?: UserType;
 }
